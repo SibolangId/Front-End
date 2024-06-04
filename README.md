@@ -14,7 +14,7 @@
     ```sh
     git branch -M master
     ```
-    nb: ganti master dengan branch yang di inginkan / buat branch baru
+    nb: ganti master dengan branch yang di inginkan
     
 4. **Inisialisasi repository Git:**
     ```sh
