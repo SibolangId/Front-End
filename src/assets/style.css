@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Logo';
+        src: url('/fonts/Martellas.ttf');
+    }
+
+    @font-face {
+        font-family: 'engplot';
+        src: url('/fonts/Engplot.ttf');
+    }
+}
