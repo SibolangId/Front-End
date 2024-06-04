@@ -12,7 +12,7 @@
     
 3. **Berpindah antar branch:**
     ```sh
-    git branch -M master
+    git branch -M master / git branch -M main
     ```
     nb: ganti master dengan branch yang di inginkan
     
@@ -23,7 +23,7 @@
 
 5. **Tambahkan remote repository:**
     ```sh
-    git remote add origin https://github.com/DanielNurSandy/si_bolang.git
+    git remote add origin https://github.com/SibolangId/Front-End.git
     ```
 
 6. **Lakukan commit dengan pesan:**
