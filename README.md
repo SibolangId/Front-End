@@ -1,29 +1,46 @@
-# basic_travel
+## Inisialisasi dan Konfigurasi Git
 
-This template should help get you started developing with Vue 3 in Vite.
+1. **Setel email pengguna GitHub:**
+    ```sh
+    git config --global user.email "email_yang_digunakan_di_github"
+    ```
 
-## Recommended IDE Setup
+2. **Inisialisasi repository Git:**
+    ```sh
+    git init
+    ```
+    
+3. **Berpindah antar branch:**
+    ```sh
+    git branch -M master
+    ```
+    nb: ganti master dengan branch yang di inginkan / buat branch baru
+    
+4. **Inisialisasi repository Git:**
+    ```sh
+    git add .
+    ```
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+5. **Tambahkan remote repository:**
+    ```sh
+    git remote add origin https://github.com/DanielNurSandy/si_bolang.git
+    ```
 
-## Customize configuration
+6. **Lakukan commit dengan pesan:**
+    ```sh
+    git commit -m "Perubahan ke-1 seterusnya"
+    ```
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+7. **Push ke branch utama (main atau master):**
+    - Jika menggunakan branch `main`:
+        ```sh
+        git push -u origin main
+        ```
+    - Jika menggunakan branch `master`:
+        ```sh
+        git push origin -u master
+        ```
+8. **Mengambil file dari github**
+    ```sh
+    git pull
+    ```
