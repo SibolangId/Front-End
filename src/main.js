@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
+import store from "./store";
 
 const routes = [
   { path: "/", component: Home },
@@ -28,4 +29,7 @@ const router = createRouter({
 
 import "./assets/style.css";
 
-createApp(App).use(router).mount("#app");
+createApp(App)
+  .use(router)
+  .use(store) // Use the store
+  .mount("#app");

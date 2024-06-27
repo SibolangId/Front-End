@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "aos": "^2.3.4",
+    "axios": "^1.7.2",
     "typer-js": "^5.5.3",
     "vue": "^3.2.47",
-    "vue-router": "^4.2.5",
-    "vue-typer": "^1.2.0"
+    "vue-router": "^4.4.0",
+    "vue-typer": "^1.2.0",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

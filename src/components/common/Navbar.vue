@@ -1,197 +1,159 @@
 <template>
-    <nav
-        :class="{ 'navbar-color': scrollPosition > 50 || mobile }"
-        class="z-50 duration-200 sticky top-0 flex items-center justify-between w-full h-[3rem] shadow-xl font-engplot">
+  <div>
+    <nav class="bg-gray-900 p-2 fixed top-0 left-0 right-0 shadow-lg flex items-center z-50">
+      <img src="/public/images/Logo.png" alt="Logo" class="h-10 w-auto" />
+      <div class="container mx-auto flex items-center">
+        <div class="flex space-x-4 ml-4" v-if="!isMobile">
+          <a href="/" class="text-gray-300 hover:text-white">HOME</a>
+          <a href="#" class="text-gray-300 hover:text-white">DESTINATION</a>
+        </div>
+        <div class="ml-auto flex items-center space-x-4">
+          <input
+            type="text"
+            placeholder="Search or jump to..."
+            class="p-2 rounded bg-gray-800 text-gray-300 placeholder-gray-500"
+            v-if="!isMobile" />
 
-        <svg @click="toggleMobileNav" :class="{ 'icon-active': mobileNav }"
-        class="transition-all duration-200 w-10 ml-5 md:hidden"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M3 12L19 12M3 6L19 6M3 18L19 18"
-            stroke="#ffffff"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round" />
-        </svg>
-
-        <img
-        class="h-[90%] md:ml-10 ml-5 mr-5"
-        src="/public/images/Logo.png"
-        alt="Logo" />
-
-        <div class="flex items-center space-x-4 mr-5 ml-auto">
-        <div
-            class="flex-grow flex items-center justify-center h-[40px] p-2 text-sm border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 relative">
-            <input
-            type="search"
-            class="flex-grow w-full h-auto px-4 bg-transparent border-none outline-none"
-            placeholder="Search..."
-            required />
-            <button
-            type="submit"
-            class="flex items-center right-2.5 h-[30px] text-white bg-[#7FBCD2] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[15px] px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Search
+          <template v-if="isAuthenticated">
+            <button @click="logout" class="signin-button text-white">
+              Logout
             </button>
+          </template>
+          <template v-else>
+            <button @click="navigateToLogin" class="signin-button text-white">
+              Sign in
+            </button>
+            <button v-if="!isMobile" @click="navigateToRegister" class="signup-button text-white">
+              Sign up
+            </button>
+          </template>
         </div>
-
-        <div class="hidden md:flex items-center space-x-4">
-            <ul
-            id="btn"
-            class="flex items-center space-x-4 uppercase font-semibold font-engplot">
-            <li>
-                <button class="button p-2 w-auto">
-                <router-link to="/Login">Sign In</router-link>
-                </button>
-            </li>
-            <li>
-                <button
-                class="button p-2 w-auto bg-slate-700 text-[#ffffff] hover:transform: translateY(-1.5px); hover:text-[#311e39] hover:bg-gray-300">
-                <router-link to="/Register">Sign Up</router-link>
-                </button>
-            </li>
-            </ul>
-        </div>
-        </div>
+      </div>
+      <button v-if="isMobile" @click="toggleSidebar" class="text-white ml-4">
+        <svg v-if="!isSidebarOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+        <svg v-if="isSidebarOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </nav>
-    <transition name="slide-fade">
-        <ul
-        id="dropdownNav"
-        class="fixed w-[50%] h-full z-40 top-15 text-white pt-8 pb-4 bg-[#7FBCD2] flex flex-col gap-2 font-engplot items-center text-lg"
-        v-show="mobileNav">
-            <li class="li">Home</li>
-            <li class="li">About</li>
-            <li class="li">
-                <router-link class="" to="/#location">Favorite</router-link>
+    <div v-show="isSidebarOpen && isMobile" class="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur z-40" @click="toggleSidebar"></div>
+    <aside v-show="isMobile" :class="['fixed top-14 right-0 w-64 bg-gray-800 shadow-lg transform rounded-lg', {'translate-x-full': !isSidebarOpen, 'translate-x-0': isSidebarOpen}]" class="transition-transform duration-300 ease-in-out z-50">
+      <div class="p-4 flex flex-col justify-between h-full">
+        <div>
+          <ul>
+            <li class="mb-2">
+              <a href="/" class="text-gray-300 hover:text-white">HOME</a>
             </li>
-                <ul  class="btn flex items-center space-x-4 uppercase font-semibold font-engplot">
-                    <li>
-                        <button class="button p-2 w-auto">
-                        <router-link to="/Login">Sign In</router-link>
-                        </button>
-                    </li>
-                    <li>
-                        <button
-                        class="button p-2 w-auto bg-slate-700 text-[#ffffff] hover:transform: translateY(-1.5px); hover:text-[#311e39] hover:bg-gray-300">
-                        <router-link to="/Register">Sign Up</router-link>
-                        </button>
-                    </li>
-                </ul>
-        </ul>
-    </transition>
+            <li class="mb-2">
+              <a href="#" class="text-gray-300 hover:text-white">DESTINATION</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <input type="text" placeholder="Search or jump to..." class="p-2 rounded bg-gray-900 text-gray-300 placeholder-gray-400 w-full mb-4" />
+          <template v-if="isAuthenticated">
+            <button @click="logout" class="signin-button text-white w-full mb-2">
+              Logout
+            </button>
+          </template>
+          <template v-else>
+            <button @click="navigateToLogin" class="signin-button text-white w-full mb-2">
+              Sign in
+            </button>
+            <button @click="navigateToRegister" class="signup-button text-white w-full">
+              Sign up
+            </button>
+          </template>
+        </div>
+      </div>
+    </aside>
+  </div>
 </template>
 
-<!-- your script and style tags remain the same -->
-
 <script>
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-    data() {
-        return {
-        mobile: false,
-        scrolled: false,
-        windowWidth: false,
-        mobileNav: false,
-        activePage: false,
-        scrollPosition: 0,
-        };
+  name: 'Navbar',
+  data() {
+    return {
+      isSidebarOpen: false,
+      isMobile: false,
+    };
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+  },
+  methods: {
+    ...mapActions(['logout']),
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen;
     },
-    methods: {
-        checkScreen() {
-        this.windowWidth = window.innerWidth;
-        this.mobile = this.windowWidth <= 750;
-        },
-        toggleMobileNav() {
-        this.mobileNav = !this.mobileNav;
-        },
-        onScroll() {
-        this.scrollPosition = window.scrollY;
-        },
+    checkScreenSize() {
+      this.isMobile = window.innerWidth < 1000;
     },
-    created() {
-        window.addEventListener("resize", this.checkScreen);
-        this.checkScreen();
+    navigateToLogin() {
+      this.$router.push('/login');
     },
-    mounted() {
-        const links = document.querySelectorAll("li a");
-        links.forEach((link) => {
-        link.addEventListener("click", (e) => {
-            links.forEach((link) => link.classList.remove("active"));
-            e.preventDefault();
-            link.classList.add("active");
-        });
-        });
-        window.addEventListener("scroll", this.onScroll);
+    navigateToRegister() {
+      this.$router.push('/register');
     },
-    beforeDestroy() {
-        window.removeEventListener("resize", this.checkScreen);
-        window.removeEventListener("scroll", this.onScroll);
-    },
+  },
+  mounted() {
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.checkScreenSize);
+  },
 };
 </script>
 
-<style>
-#dropdownNav .btn {
-    position: absolute;
-    bottom: 6em;
+<style scoped>
+/* Tambahkan style tambahan jika diperlukan */
+.signin-button,
+.signup-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.45rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.button {
-    background-color: transparent;
-    border: 2px solid #1a1a1a;
-    border-radius: 10px;
-    color: #3b3b3b;
-    display: inline-block;
-    font-size: 16px;
-    line-height: normal;
-    outline: none;
-    transition: all 200ms cubic-bezier(0.23, 1, 0.32, 1);
+.signin-button {
+  background-color: #1f2937; /* Warna abu-abu gelap */
 }
 
-.button:disabled {
-    pointer-events: none;
+.signup-button {
+  background-color: #a29df3; /* Warna biru */
 }
 
-.button:hover {
-    color: #fff;
-    background-color: #1a1a1a;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-1.5px);
+.signin-button:hover {
+  background-color: #4b5563; /* Warna abu-abu lebih terang */
+  transform: translateY(-2px); /* Efek melayang */
 }
 
-.button:active {
-    box-shadow: none;
-    transform: translateY(0);
+.signup-button:hover {
+  background-color: #6366f1; /* Warna biru lebih terang */
+  transform: translateY(-2px); /* Efek melayang */
 }
 
-#dropdownNav .li {
-    @apply hover:bg-white hover:text-black w-[80%] rounded-lg text-center py-4 uppercase;
+.container {
+  flex-grow: 1;
 }
 
-.icon-active {
-    @apply rotate-180 transition-all duration-200;
+aside {
+  height: calc(100% - 100px); /* Sesuaikan tinggi sidebar */
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
-.slide-fade-enter-active {
-    transition: all 0.3s ease-out;
+aside ul li a {
+  padding: 0.75rem; /* Sesuaikan padding link */
+  display: block;
 }
 
-.slide-fade-leave-active {
-    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateX(-20px);
-    opacity: 0;
-}
-
-.navbar-color {
-    @apply bg-[#7FBCD2];
-}
-
-.router-link-active:focus,
-.router-link-exact-active:focus {
-    @apply text-black bg-white p-5;
+.backdrop-blur {
+  backdrop-filter: blur(3px);
 }
 </style>
