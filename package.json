@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.22",
     "aos": "^2.3.4",
     "axios": "^1.7.2",
     "typer-js": "^5.5.3",
