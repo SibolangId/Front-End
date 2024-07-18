@@ -14,6 +14,7 @@ module.exports = {
       Logo: ['Logo', 'sans-serif'],
       engplot: ['engplot'],
     }
+    
   },
   plugins: [],
 }
