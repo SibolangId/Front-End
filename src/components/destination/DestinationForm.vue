@@ -74,7 +74,7 @@ export default {
         this.form.description = '';
         this.form.image = null;
       } catch (error) {
-        console.error("Failed to add destination:", error);
+        console.error("Gagal menambahkan destinasi:", error);
       }
     },
     handleFileUpload(event) {
