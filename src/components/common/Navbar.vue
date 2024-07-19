@@ -82,6 +82,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import userImage from "/images/Profil/user.png";
+
 
 export default {
   name: 'Navbar',
