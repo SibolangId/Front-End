@@ -3,9 +3,11 @@ import Router from "vue-router";
 import Login from "@/components/pages/Login.vue";
 import Register from "@/components/pages/Register.vue";
 import Home from "@/components/pages/Home.vue";
-import About from "@/components/pages/About.vue";
+import AboutMe from "@/components/pages/AboutMe.vue";
 import Dashboard from "@/components/pages/Dashboard.vue";  // Perhatikan bahwa nama file adalah Dasboard.vue
 import DestinationComponent from "@/components/pages/DestinationView.vue"; 
+import DestinationDetail from '@/components/pages/DestinationDetail.vue';
+import FavoriteView from '@/components/pages/FavoriteView.vue';
 
 Vue.use(Router);
 
@@ -30,7 +32,7 @@ export default new Router({
     {
       path: "/about",
       name: "About",
-      component: About,
+      component: AboutMe,
     },
     {
       path: "/dashboard",
@@ -42,5 +44,16 @@ export default new Router({
       name: "Destinations",
       component: DestinationComponent,
     },
+    {
+      path: '/destination/:id',
+      name: 'destination-detail',
+      component: DestinationDetail,
+      props: true
+    },
+    {
+      path: '/favorites', 
+      name: 'favorites',
+      component: FavoriteView,
+    }
   ],
 });

@@ -1,40 +1,55 @@
+<!-- src/pages/DestinationView.vue -->
 <template>
-    <div>
-    <h1>Destinations</h1>
-    <div class="destination-list">
-        <DestinationCard
-        v-for="destination in allDestinations"
-        :key="destination.id"
+  <Navbar />
+  <div class="mt-20 px-4">
+    <div class="flex flex-col items-start mb-4">
+      <h1 class="text-2xl font-bold mb-2">Siapkan Perjalananmu</h1>
+      <h2 class="text-lg mb-4">Temukan destinasi impianmu di Sibolang</h2>
+      <SearchBar @search="handleSearch" />
+    </div>
+    <div class="destination-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <DestinationCard
+        v-for="destination in filteredDestinations"
+        :key="destination.destination_id"
         :destination="destination"
-        />
+      />
     </div>
-    </div>
+  </div>
+  <Footer />
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import DestinationCard from '@/components/destination/DestinationCard.vue';
+import { mapGetters, mapActions } from "vuex";
+import DestinationCard from "@/components/destination/DestinationCard.vue";
+import Navbar from '@/components/common/Navbar.vue';
+import SearchBar from '@/components/common/SearchBar.vue';
+import Footer from '@/components/common/Footer.vue';
 
 export default {
-    name: 'DestinationComponent',
-    components: {
+  name: "DestinationView",
+  components: {
+    Navbar,
     DestinationCard,
+    SearchBar,
+    Footer,
+  },
+  computed: {
+    ...mapGetters("destination", ["filteredDestinations"]),
+  },
+  methods: {
+    ...mapActions("destination", ["fetchDestinations", "setSearchQuery"]),
+    handleSearch(query) {
+      this.setSearchQuery(query);
     },
-    computed: {
-    ...mapGetters(['allDestinations']),
-    },
-    methods: {
-    ...mapActions(['fetchDestinations']),
-    },
-    created() {
+  },
+  created() {
     this.fetchDestinations();
-    },
+  },
 };
 </script>
 
 <style scoped>
 .destination-list {
-    display: flex;
-    flex-wrap: wrap;
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
 }
-</style>./Destinaton.vue
+</style>
